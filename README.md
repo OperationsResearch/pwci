@@ -9,7 +9,7 @@ a Php Web Chat Integrator
 - [Answer Chats](#answer-chat)
 - [Recommended configurations](#recommended-configurations)
 - [Custom configurations](#custom-configurations)
-- [Reconfigure](#uninstallation)
+- [Reconfigure](#reconfigureuninstallation)
 - [Contributing](#contributing)
 - [License](#license)
 
