@@ -19,17 +19,18 @@ a Php Web Chat Integrator
 
 1. Make sure php is installed (preferably, version > 5.1)
 2. Create an folder, ex. `/yourproject/pwci`
-3. Download the [code](https://github.com/OperationsResearch/pwci) and place it in the folder you created
+3. Download the [code](https://github.com/OperationsResearch/pwci) and place it in the folder you created  
       *You can do a git clone or download the zip and extract it in the folder*
 
 4. Open a webbrowser and go to the folder (ex. http://YOURHOST/pwci)
-5. You follow the instructions on the page. 
-      *(if you are not transfered to the admin page go to ex. http://YOURHOUST/pwci/admin.php)*
-      *You will need your token-api of telegram to setup the chat*
+5. You follow the instructions on the page.  
+      *(if you are not transfered to the admin page go to ex. http://YOURHOUST/pwci/admin.php)*   
+      *You will need your token-api of telegram to setup the chat*
 
 6. After finishing the first time use page you are ready to use the chat
 7. You can include now in your project:
-    ```require_once 'pwci/chat.php';
+    ```
+    require_once 'pwci/chat.php';
     $chat = new pwci();
     echo $chat->set_scripts();
     echo $chat->set_chat();
@@ -52,7 +53,7 @@ Because multiple persons can chat with you at once you have to define the user n
 ```
   deadd: Hi how can I help
   
-  !!!It's really important that you include the username: to reply otherwise the chatuser will not receive it!!!
+!!!It's really important that you include the username: to reply otherwise the chatuser will not receive it!!!
 ```
 
 # Recommended configurations
