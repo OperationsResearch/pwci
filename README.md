@@ -56,6 +56,9 @@ Because multiple persons can chat with you at once you have to define the user n
 !!!It's really important that you include the username: to reply otherwise the chatuser will not receive it!!!
 ```
 
+You can now also send a picture to the chat user -> send it as image and include in the caption. Again use the *username: unimported message*
+      *Without the caption it will never be delivered to the chat user*
+
 # Recommended configurations
 
 [(Back to top)](#table-of-contents)
@@ -93,6 +96,7 @@ These are all possible configurations:
   debug            <- you can enable logging, default false
   initmessage      <- default message that appears after some seconds to invite the user to chat
   chattitle        <- The title of the chat window, default "Php Web Chat"
+  infotooltip      <- Text of the tooltip when hovering the response-image
   inputmessage     <- the message where the chat person can type something, default "Type a message..."
   faceleft         <- picture location that will be used for the response of you, default "images/people.png"
   faceright        <- picture location of the chat person, default "images/people.png"

@@ -13,6 +13,7 @@
 // 22/02/17: add some more functionality                                      //
 // 11/10/17: Fixed some small bugs                                            //
 // 20/08/17: addded comments                                                  //
+// 14/11/18: Fixed some notice message in php                                 //
 // -------------------------------------------------------------------------- //
 // COMMENTS:                                                                  //
 // -------------------------------------------------------------------------- //
@@ -54,7 +55,8 @@ class telegramTools {
 
   ### Function: Private - get the settings from file
   public static function load_settings() {
-    return unserialize(file_get_contents(reset(glob(realpath(dirname(__FILE__)."/..")."/*.json"))));
+    $file = glob(realpath(dirname(__FILE__)."/..")."/*.json");
+    return unserialize(file_get_contents(reset($file)));
   }
 
   ### Function: Public - save settings

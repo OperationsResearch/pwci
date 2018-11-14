@@ -27,21 +27,21 @@ chatApp.controller('chatCtrl', function($scope, Api, $timeout) {
     if (response.data && Array.isArray(response.data)) {
       // If session exist resume chat
       var updates = _.map(response.data, function(m) {
-        return { src: m.src, text: m.text };
+        return { src: m.src, text: m.text, helper: m.from };
       });
       $scope.messages = $scope.messages.concat(updates);
       $scope.total = $scope.messages.length;
       $scope.POLLING = true;
     } else {
       if (response.data && response.data != 'null') {
-        $scope.messages.push({src: "admin", text: "There is an error in the chat. Try to contact the administrator by mail so he can solve it."});
+        $scope.messages.push({src: "admin", text: "There is an error in the chat. Try to contact the administrator by mail so he can solve it.", helper: "a bot"});
         $scope.total = $scope.messages.length;
         $scope.ERROR = true;
       } else {
-        // No session so wait a bit to start new chat or wair for user
+        // No session so wait a bit to start new chat or wait for user
         if (typeof ajax_object.startmessage !== 'undefined') {
           $timeout(function() {
-            $scope.messages.push({src: "admin", text: ajax_object.startmessage});
+            $scope.messages.push({src: "admin", text: ajax_object.startmessage, helper: "a bot"});
             $scope.total = 1;
           }, INITIAL_SEND_TIMEOUT);
         }
@@ -81,13 +81,13 @@ chatApp.controller('chatCtrl', function($scope, Api, $timeout) {
       console.log("Response of check:", response);
       if (response.data && Array.isArray(response.data)) {
         var updates = _.map(response.data, function(m) {
-          return { src: m.src, text: m.text	};
+          return { src: m.src, text: m.text, helper: m.from	};
         });
         $scope.messages = $scope.messages.concat(updates);
         $scope.total = $scope.messages.length;
       } else {
         if (response.data && response.data != 'null') {
-          $scope.messages.push({src: "admin", text: "There is an error in the chat. Try to contact the administrator by mail so he can solve it."});
+          $scope.messages.push({src: "admin", text: "There is an error in the chat. Try to contact the administrator by mail so he can solve it.", helper: "a bot"});
           $scope.total = $scope.messages.length;
           $scope.ERROR = true;
         }

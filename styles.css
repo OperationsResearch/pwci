@@ -7,6 +7,10 @@
  * Inital css file for coding but has been minified to add in the chat.php file.
  * So this is not used!!!
  */
+#chattingBox p:before,
+.content:before {
+  content: ""
+}
 #chattingBox {
   font-size: .84em;
   border: 1px solid #000;
@@ -14,191 +18,223 @@
   z-index: 10;
   background: #aab8c2;
   bottom: 0;
+  height: 80%;
+  width: 100%;
+  position: fixed
 }
-.chatleft{
-  left: 2em;
-  position: fixed;
-  width: 24.8em;
+.chatleft {
+  left: 2em
 }
 .chatright {
-  right: 2em;
-  position: fixed;
-  width: 24.8em;
+  right: 2em
 }
 .chatmiddle {
   position: fixed;
-  width: 100%;
+  margin: 0 auto;
+  left: 0;
+  right: 0
 }
 #chattingBox #profile {
   background: #000;
   color: #fff;
   cursor: pointer;
   padding: 1em 2em;
-  border-radius: 0.4em 0.4em 0 0;
+  border-radius: .4em .4em 0 0
 }
 #chattingBox p:before {
   background: #abff00;
-  box-shadow: rgba(0, 0, 0, 0.2) 0 -0.1em 0.3em 0.1em, inset #1a8a34 0 -0.15em 0.2em, #89ff00 0 0.1em 0.6em;
+  box-shadow: rgba(0, 0, 0, .2) 0 -.1em .3em .1em, inset #1a8a34 0 -.1em .3em, #89ff00 0 .15em .7em;
   border-radius: 50%;
-  content: "";
   display: inline-block;
-  height: 0.8em;
-  width: 0.8em;
-  margin: 0 0.6em 0 0;
+  height: .8em;
+  width: .8em;
+  margin: 0 .6em 0 0
 }
 #chattingBox form {
-  padding: 1.5em 0;
+  padding: 1.5em 0
 }
-.p1 { display: none; }
 .chat-message-counter {
   background: #e62727;
   border: 1px solid #fff;
   border-radius: 50%;
-  font-size: 0.84em;
-  font-weight: bold;
+  font-size: .84em;
+  font-weight: 700;
   height: 2.8em;
   width: 2.8em;
-  left: 0;
   line-height: 2.8em;
   margin: -1.5em 0 0 -1.5em;
   position: absolute;
   text-align: center;
   top: 0;
+  display: none
+}
+.chatright .chat-message-counter {
+  left: 0
+}
+.chatmiddle .chat-message-counter {
+  left: .8em;
+  margin: .8em 0
+}
+.chatleft .chat-message-counter {
+  right: -1.5em
+}
+.content:before,
+div.messagearea.right .content:before {
+  border-top: .9em solid transparent;
+  border-bottom: 0 solid transparent
 }
 #messageBox {
-  height: 23em;
+  height: 83%;
+  height: -webkit-calc(100% - 10.4em);
+  height: -moz-calc(100% - 10.4em);
+  height: calc(100% - 10.4em);
+  width: 75%;
+  width: -webkit-calc(100% - 3em);
+  width: -moz-calc(100% - 3em);
+  width: calc(100% - 3em);
+  position: absolute;
+  ;
   margin-bottom: 5.1em;
-  padding: 0.6em 1.5em;
+  padding: .6em 1.5em;
   overflow-y: scroll;
-  overflow-x: hidden;
-  background-color: #fff;
+  background-color: #fff
 }
-#messageBox div.messagearea{
-  padding:0 0 0.55em 0;
-  clear:both;
+#messageBox div.messagearea {
+  padding: 0 0 .55em;
+  clear: both;
   margin-bottom: 1em;
   margin-right: 1.2em;
   overflow: hidden;
-  position: relative;
+  position: relative
 }
-#messageBox div.messagearea.right{
-  margin-right: -0.4em;
-  margin-left: 1.55em;
+#messageBox div.messagearea.right {
+  margin-right: -.4em;
+  margin-left: 1.55em
 }
 #messageBox div.messagearea .img {
   float: left;
   border-radius: 50%;
   height: 2.5em;
   width: 2.5em;
-  background:#fff url("images/people.png") 0 0 no-repeat;
+  background: url(images/people.png) no-repeat #fff;
   background-size: 2.5em;
-  overflow: hidden;
-  position: absolute; 
-  bottom: 0;
+  position: absolute;
+  bottom: 0
 }
 #messageBox div.messagearea .img span {
-  font-size: 0em;
+  font-size: 0
+}
+#messageBox div.messagearea.left .img .tooltip {
+  visibility: hidden;
+  font-size: unset;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: .5em;
+  padding: .5em;
+  white-space: nowrap;
+  /* Position the tooltip */
+  position: absolute;
+  left: 2em;
+  top: -1.5em;
+  z-index: 5;
+}
+#messageBox div.messagearea.left .img:hover .tooltip {
+  visibility: visible;
 }
 #messageBox div.messagearea.right .img {
-  float: right; 
-  background: #fff url("images/people.png") 0 0 no-repeat;
+  float: right;
+  background: url(images/people.png) no-repeat #fff;
   background-size: 2.5em;
-  right:0;
+  right: 0
 }
-.messagearea .content{ 
+.messagearea .content {
   background: #effdde;
-  color:#8495a3;
+  color: #8495a3;
   margin-left: 3.1em;
   font-size: 1.08em;
   font-weight: 600;
-  padding: 0.8em;
-  border-radius:0.5em 0.5em 0.5em 0; 
-  position:relative;
-  float:left;
-  box-shadow: 0 0.12em 0 #aed5bb;
+  padding: .8em;
+  border-radius: .5em .5em .5em 0;
+  position: relative;
+  float: left;
+  box-shadow: 0 .12em 0 #aed5bb
 }
-#messageBox div.messagearea.right .content{
-  float:right;
+#messageBox div.messagearea.right .content {
+  float: right;
   margin-right: 3.1em;
   margin-left: 0;
-  border-radius:0.5em 0.5em 0 0.5em;
+  border-radius: .5em .5em 0;
   background: #419fd9;
   color: #fff;
-  box-shadow: 0 0.15em 0 #2e83b8;
+  box-shadow: 0 .15em 0 #2e83b8
 }
 .content:before {
-  content:"";
-  position:absolute;
-  display:block;
-  left:0;
-  border-right:0.7em solid #effdde;
-  border-top: 0.9em solid transparent;
-  border-bottom:0em solid transparent;
-  bottom:0;
-  margin-left:-0.6em;
-  box-shadow: 0 0.12em 0 #aed5bb;
+  position: absolute;
+  display: block;
+  left: 0;
+  border-right: .7em solid #effdde;
+  bottom: 0;
+  margin-left: -.6em;
+  box-shadow: 0 .12em 0 #aed5bb
 }
-div.messagearea.right .content:before{
-  left:99%;
-  margin-right:-0.6em;
-  margin-left:0;
-  border-right:0em solid transparent;
-  border-left:0.7em solid #419fd9;
-  border-top: 0.9em solid transparent;
-  border-bottom:0em solid transparent;
-  box-shadow: 0 0.15em 0 #2e83b8;
+div.messagearea.right .content:before {
+  left: 99%;
+  margin-right: -.6em;
+  margin-left: 0;
+  border-right: 0 solid transparent;
+  border-left: .7em solid #419fd9;
+  box-shadow: 0 .15em 0 #2e83b8
 }
-#chatBox{
-  border-top:1px solid #e7ebee;
-  position:absolute;
-  bottom:0;
-  right:0;
-  width:100%;
-  background:#fff;
+#chatBox {
+  height: 2.1em;
+  border-top: 1px solid #e7ebee;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  background: #fff;
 }
-#chatBox input{
-  background:#fff;
-  margin:0;
-  border:none;
-  padding:0;
-  font-size:1.2em;
-  font-weight:400;
-  color:#aab8c2;
+#chatBox input {
+  background: #fff;
+  border: none;
+  padding: 0;
+  font-size: 1.2em;
+  font-weight: 400;
+  color: #aab8c2;
   width: 75%;
   width: -webkit-calc(100% - 5em);
-  width:    -moz-calc(100% - 5em);
-  width:         calc(100% - 5em);
-  margin: 0 1em;
+  width: -moz-calc(100% - 5em);
+  width: calc(100% - 5em);
+  margin: 0 1em
 }
-#chatBox input:focus{
-  outline: 0;
+#chatBox button:focus,
+#chatBox input:focus {
+  outline: 0
 }
-#chatBox button{
-  background:#fff url("images/send.png") 0 -41px no-repeat;
+#chatBox button {
+  background: url(images/send.png) 0 -41px no-repeat #fff;
   width: 2.5em;
   height: 2.5em;
-  position:absolute;
+  position: absolute;
   right: 1.1em;
   bottom: 0;
-  border:none;
+  border: none
 }
-#chatBox button:hover{
-  cursor:pointer;
-  background-position: 0 0 ;
-}
-#chatBox button:focus{
-  outline: 0;   
+#chatBox button:hover {
+  cursor: pointer;
+  background-position: 0 0
 }
 .debugbuttons {
-  position:absolute;
+  position: absolute;
   height: 1em;
   top: 0;
-  right:0;
+  right: 0
 }
-/* Animation - ngAnimate needed */
 .animatefade.ng-enter {
-  transition: 0.1s ease all;
-  opacity: 0;
+  transition: .1s ease all;
+  opacity: 0
 }
 .animatefade.ng-enter.ng-enter-active {
-  opacity: 1; }
+  opacity: 1
+}

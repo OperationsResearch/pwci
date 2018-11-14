@@ -12,6 +12,7 @@
 // 22/02/17: Create file                                                      //
 // 20/08/17: addded comments                                                  //
 // 11/10/17: Fixed some small bugs                                            //
+// 14/11/18: added location param                                             //
 // -------------------------------------------------------------------------- //
 // COMMENTS:                                                                  //
 // -------------------------------------------------------------------------- //
@@ -32,6 +33,7 @@ if ($connected != false){
 
 if (isset($_REQUEST["config"]) && $_REQUEST["config"] != "") {
   $stepconfig = $_REQUEST["config"];
+  $settings["location"] = $_SERVER["HTTP_HOST"].str_replace("admin.php","",$_SERVER["REQUEST_URI"]);
   if (isset($_REQUEST["timezone"])) {
     if ($_REQUEST["timezone"] != "0") {
       $settings["timezone"] = $_REQUEST["timezone"];

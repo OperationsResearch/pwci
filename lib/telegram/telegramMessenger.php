@@ -12,6 +12,7 @@
 // 15/09/16: Create file                                                      //
 // 11/10/17: Fixed some small bugs                                            //
 // 20/08/17: addded comments                                                  //
+// 14/11/18: addded sender and photo receiving and fixed notice messages      //
 // -------------------------------------------------------------------------- //
 // COMMENTS:                                                                  //
 // Rely on the api of Telegram                                                //
@@ -38,7 +39,8 @@ final class TelegramClient implements IClient {
   ### Function: Private - construct client by getting telegram bot token
   private function __construct() {
     $this->token = telegramTools::get_settings_item("token", "");
-    $this->baseUrl = 'https://api.telegram.org/bot' . $this->token;
+    $this->baseUrl = "https://api.telegram.org/bot".$this->token;
+    $this->fileUrl = "https://api.telegram.org/file/bot".$this->token."/";
   }
   
   ### Function: Private - get a response and check if everything is okay
@@ -61,6 +63,23 @@ final class TelegramClient implements IClient {
     $url = $this->baseUrl."/getUpdates";
     $data = $offset ? ['offset' => $offset] : [];
     return $this->getResults(telegramTools::postJson($url, $data));
+  }
+
+  ### Function: Public - get file from bot
+  public function getFile($message) {
+    $file_id = (isset($message->photo)?$message->photo[3]->file_id:"");
+    $file = $this->getResults(telegramTools::postJson($this->baseUrl."/getFile", ['file_id' => $file_id]));
+    if ($file->ok && isset($file->result->file_path)) {
+      $ch = curl_init($this->fileUrl.$file->result->file_path);
+      $fp = fopen(realpath(dirname(__FILE__)."/../..")."/downloads/".$file->result->file_path, 'wb');
+      curl_setopt($ch, CURLOPT_FILE, $fp);
+      curl_setopt($ch, CURLOPT_HEADER, 0);
+      curl_exec($ch);
+      curl_close($ch);
+      fclose($fp);
+      return "http://".telegramTools::get_settings_item("location", "")."downloads/".$file->result->file_path;
+    }
+    return "file or photo not found";
   }
 
   ### Function: Public - get information about the connected bot
@@ -129,7 +148,7 @@ class Messenger {
     try {
       $botinfo = $client->getInfoBot();
     } catch (Exception $e) { return ["message" => $e->getMessage(), "status" => false]; }
-    if ($botinfo->ok && count($botinfo->result) > 0) {
+    if ($botinfo->ok && isset($botinfo->result->first_name)) {
       telegramTools::save_settings_item('bot_name', $botinfo->result->first_name);
       telegramTools::save_settings_item('username', $botinfo->result->username);
     } else { return ["message" => "failed to get bot info", "status" => false]; }
@@ -153,9 +172,9 @@ class Messenger {
 
   ### Function: Public - get all messages from bot or from session
   public static function getUpdates(telegramSession $sess, $data = null) {
+    $results = NULL;
     if (isset($data["init"])) {
       $results = $sess->getMessages();
-      if (empty($results)) { $results = NULL;}
     } else {
       $client = TelegramClient::instance();
       $sess_offset = $sess->getUser()->getTelegramOffset();
@@ -165,13 +184,22 @@ class Messenger {
         // We have updates, let's filter out updates
         // that are not directed at this user
         $username = $sess->getUser()->getUsername() . ':';
-        $results = array_filter($updates->result, function ($mes) use ($username) {
-          if (stripos($mes->message->text, $username) === 0) {
+        $results = array_filter($updates->result, function ($mes) use ($username, $client) {
+          if (isset($mes->message->text) && stripos($mes->message->text, $username) === 0) {
             // We got a match
             $mes->src = 'admin';
+            $mes->from = $mes->message->from->first_name;
             $mes->chat_id = $mes->message->chat->id;
             $mes->offset = 0;
             $mes->text = trim(str_ireplace($username, '', $mes->message->text));
+            unset($mes->message);
+            return $mes;
+          } elseif (isset($mes->message->caption) && stripos($mes->message->caption, $username) === 0) {
+            $mes->src = 'admin';
+            $mes->from = $mes->message->from->first_name;
+            $mes->chat_id = $mes->message->chat->id;
+            $mes->offset = 0;
+            $mes->text = $client->getFile($mes->message);
             unset($mes->message);
             return $mes;
           }
